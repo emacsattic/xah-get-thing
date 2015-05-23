@@ -3,7 +3,7 @@ This emacs lisp package provides functions similar to `thing-at-point' of `thing
 The functions are:
 
 - xah-get-thing-at-cursor
-- xah-get-thing-or-selection-at-cursor
+- xah-get-thing-or-selection
 
 They get “things” independent of syntax table, so you always get same thing regardless what's current major mode.
 

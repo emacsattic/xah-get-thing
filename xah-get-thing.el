@@ -19,7 +19,7 @@
 ;; The functions are:
 
 ;; xah-get-thing-at-cursor
-;; xah-get-thing-or-selection-at-cursor
+;; xah-get-thing-or-selection
 
 ;; They get “things” independent of syntax table, so you always get same thing regardless what's current major mode.
 
@@ -152,7 +152,7 @@ The main differences are:
 
     (vector (buffer-substring-no-properties p1 p2) p1 p2 )))
 
-(defun xah-get-thing-or-selection-at-cursor (φunit)
+(defun xah-get-thing-or-selection (φunit)
   "Return the string and boundary of text selection or ΦUNIT under cursor.
 
 If `use-region-p' is true, then the region is the φunit.  Else,
@@ -163,7 +163,7 @@ Returns a vector [text a b], where text is the string and a and b
 are its boundary.
 
 Example usage:
- (setq bds (xah-get-thing-or-selection-at-cursor 'line))
+ (setq bds (xah-get-thing-or-selection 'line))
  (setq inputstr (elt bds 0) p1 (elt bds 1) p2 (elt bds 2)  )"
   (interactive)
   (if (use-region-p)
