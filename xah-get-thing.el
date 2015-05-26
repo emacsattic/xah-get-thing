@@ -21,16 +21,12 @@
 ;; xah-get-thing-at-cursor
 ;; xah-get-thing-or-selection
 
-;; They get “things” independent of syntax table, so you always get same thing regardless what's current major mode.
+;; They get “thing” independent of syntax table, so you always get same thing regardless what's current major mode.
 
-;; They allow you to get text selection when there's active region.
+;; xah-get-thing-or-selection get text selection when there's active region.
 
-;; Just call describe-function on them to read the inline doc.
-;; For more detail see home page: http://ergoemacs.org/emacs/elisp_get-selection-or-unit.html
-
-;; Like it? Please support by
-;; Buy Xah Emacs Tutorial
-;; http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html
+;; Call describe-function on them to read the inline doc.
+;; Home page: http://ergoemacs.org/emacs/elisp_get-selection-or-unit.html
 
 ;;; Install:
 
@@ -43,19 +39,18 @@
 ;;; HISTORY
 
 ;; 2015-05-22 changes won't be logged here anymore, unless incompatible ones.
-;; version 1.0, 2015-05-22 extracted and renamed {unit-at-cursor, get-selection-or-unit} from xeu_elisp_util.el 
+;; version 1.0, 2015-05-22 was {unit-at-cursor, get-selection-or-unit} from xeu_elisp_util.el
 
 
 ;;; Code:
 
 (defun xah-get-thing-at-cursor (φunit)
   "Return the string and boundary of ΦUNIT under cursor.
-
-Returns a vector [text a b], where text is the string and a and b are its boundary.
+Returns vector [text a b], where text is the string and a b are its boundary.
 
 ΦUNIT can be:
 
-• 'word — sequence of 0 to 9, A to Z, a to z, and hyphen.
+• 'word — sequence of hyphen, 0 to 9, A to Z, a to z, and other chars such as àáâãäå.
 
 • 'glyphs — sequence of visible glyphs. Useful for file name, URL, …, anything doesn't have white spaces in it.
 
@@ -155,16 +150,13 @@ The main differences are:
 (defun xah-get-thing-or-selection (φunit)
   "Return the string and boundary of text selection or ΦUNIT under cursor.
 
-If `use-region-p' is true, then the region is the φunit.  Else,
-it depends on the ΦUNIT. See `xah-get-thing-at-cursor' for detail about
-ΦUNIT.
+Returns a vector [text a b], where text is the string and a b are its boundary.
 
-Returns a vector [text a b], where text is the string and a and b
-are its boundary.
+If `use-region-p' is true, then text is the region.  Else, it depends on the ΦUNIT, which can be 'word 'line 'block 'buffer 'filepath 'url …. See `xah-get-thing-at-cursor' for detail.
 
 Example usage:
  (setq bds (xah-get-thing-or-selection 'line))
- (setq inputstr (elt bds 0) p1 (elt bds 1) p2 (elt bds 2)  )"
+ (setq inputstr (elt bds 0) p1 (elt bds 1) p2 (elt bds 2))"
   (interactive)
   (if (use-region-p)
       (let ((p1 (region-beginning)) (p2 (region-end)))
