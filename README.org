@@ -1,5 +1,7 @@
 This emacs lisp package provides functions similar to `thing-at-point' of `thingatpt.el'.
 
+[[http://melpa.org/#/xah-get-thing][file:http://melpa.org/packages/xah-get-thing-badge.svg]]
+
 The functions are:
 
 - xah-get-thing-at-cursor
