@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2015 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.org/ )
-;; Version: 1.0.0
+;; Version: 1.0.1
 ;; Created: 22 May 2015
 ;; Keywords: extensions, lisp, tools
 ;; URL: http://ergoemacs.org/emacs/elisp_get-selection-or-unit.html
@@ -155,8 +155,12 @@ Returns a vector [text a b], where text is the string and a b are its boundary.
 If `use-region-p' is true, then text is the region.  Else, it depends on the ΦUNIT, which can be 'word 'line 'block 'buffer 'filepath 'url …. See `xah-get-thing-at-cursor' for detail.
 
 Example usage:
- (setq bds (xah-get-thing-or-selection 'line))
- (setq inputstr (elt bds 0) p1 (elt bds 1) p2 (elt bds 2))"
+(progn
+    (setq boundary (xah-get-thing-or-selection 'block))
+    (setq
+     input-str (elt boundary 0)
+     p1 (elt boundary 1)
+     p2 (elt boundary 2)))"
   (interactive)
   (if (use-region-p)
       (let ((p1 (region-beginning)) (p2 (region-end)))
@@ -164,5 +168,9 @@ Example usage:
     (xah-get-thing-at-cursor φunit)))
 
 (provide 'xah-get-thing)
+
+;; Local Variables:
+;; coding: utf-8
+;; End:
 
 ;;; xah-get-thing.el ends here
