@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2015 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.org/ )
-;; Version: 2.0.0
+;; Version: 2.0.1
 ;; Created: 22 May 2015
 ;; Keywords: extensions, lisp, tools
 ;; URL: http://ergoemacs.org/emacs/elisp_get-selection-or-unit.html
@@ -153,7 +153,7 @@ Version 2016-10-18"
   "Same as `xah-get-bounds-of-thing', except when (use-region-p) is t, return the region boundary instead.
 Version 2016-10-18"
   (if (use-region-p)
-      (car (region-beginning) (region-end))
+      (cons (region-beginning) (region-end))
     (xah-get-bounds-of-thing *unit)))
 
 (defun xah-get-thing-at-point (*unit)
