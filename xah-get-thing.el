@@ -1,8 +1,8 @@
 ;;; xah-get-thing.el --- get thing or selection at point.
 
-;; Copyright © 2011-2015 by Xah Lee
+;; Copyright © 2011-2016 by Xah Lee
 
-;; Author: Xah Lee ( http://xahlee.org/ )
+;; Author: Xah Lee ( http://xahlee.info/ )
 ;; Version: 2.0.1
 ;; Created: 22 May 2015
 ;; Keywords: extensions, lisp, tools
