@@ -1,4 +1,4 @@
-;;; xah-get-thing.el --- get thing or selection at point. -*- lexical-binding: t; -*-
+;;; xah-get-thing.el --- get thing or selection at point. -*- coding: utf-8; lexical-binding: t; -*-
 
 ;; Copyright © 2011-2016 by Xah Lee
 
@@ -185,9 +185,5 @@ Version 2016-10-18T00:23:52-07:00"
 (make-obsolete 'xah-get-thing-or-selection 'xah-get-bounds-of-thing-or-region "2016-10-18")
 
 (provide 'xah-get-thing)
-
-;; Local Variables:
-;; coding: utf-8
-;; End:
 
 ;;; xah-get-thing.el ends here
