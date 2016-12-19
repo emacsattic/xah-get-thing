@@ -1,10 +1,11 @@
-;;; xah-get-thing.el --- get thing or selection at point.
+;;; xah-get-thing.el --- get thing or selection at point. -*- lexical-binding: t; -*-
 
 ;; Copyright © 2011-2016 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.0.1
+;; Version: 2.0.2
 ;; Created: 22 May 2015
+;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
 ;; URL: http://ergoemacs.org/emacs/elisp_get-selection-or-unit.html
 
