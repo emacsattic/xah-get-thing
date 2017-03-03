@@ -80,7 +80,7 @@ The main difference are:
 
 • Some “thing” such 'url and 'filepath considers strings that at USUALLY used for such. The algorithm that determines this is different from thing-at-point.
 
-Version 2016-10-18"
+Version 2016-12-22"
   (let (p1 p2)
     (save-excursion
       (cond
@@ -138,6 +138,24 @@ Version 2016-10-18"
           (goto-char p0)
           (skip-chars-forward -delimitors) ;"^ \t\n,)]}<>〕\"”"
           (setq p2 (point))))
+
+;; • 'filepath-or-url — either file path or URL, with heuristics to detect which sequences of chars to grab. They cannot be distinguished correctly by just lexical form. For example, URL usually contains the colon, but file path not. Sometimes you need this, for example, the value of “href” attribute, which can be just a file path (e.g. relative path) or URL (e.g. http://example.com/)
+
+       ;; ((eq *unit 'filepath-or-url)
+       ;;  (let (p0
+       ;;        -input
+       ;;        (case-fold-search nil)
+       ;;        (-delimitors "!\"#$%&'*+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~"))
+       ;;    (setq p0 (point))
+       ;;    (skip-chars-backward -delimitors) ;"^ \t\n,([{<>〔“\""
+       ;;    (setq p1 (point))
+       ;;    (goto-char p0)
+       ;;    (skip-chars-forward -delimitors) ;"^ \t\n,)]}<>〕\"”"
+       ;;    (setq p2 (point))
+       ;;    (setq -input (buffer-substring-no-properties p1 p2))
+       ;;    (if (string-match "`http\\|`file" -input &optional START)
+       ;;        (progn )
+       ;;      (progn ))))
 
        ((vectorp *unit)
         (let (p0)
