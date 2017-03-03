@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2016 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.0.2
+;; Version: 2.0.3
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
@@ -22,12 +22,21 @@
 ;; xah-get-bounds-of-thing
 ;; xah-get-bounds-of-thing-or-region
 ;; xah-get-thing-at-point
-;; xah-get-thing-at-cursor (deprecated)
-;; xah-get-thing-or-selection (deprecated)
 
-;; They get “thing” independent of syntax table, so you always get same thing regardless what's current major mode.
+;; They are useful for writing commands that act on text selection if there's one, or current {symbol, block, …} under cursor.
 
-;; Call describe-function on them to read the inline doc.
+;; This package is similar to emac's builtin thing-at-point package thingatpt.el.
+
+;; The main differences are:
+
+;; • Is not based on syntax table. So, the “thing” are predicable in any major mode.
+;; • provides the 'block, which is similar to emacs's 'paragraph, but strictly defined by between blank lines.
+;; • xah-get-bounds-of-thing-or-region Returns the boundary of region, if active. This saves you few lines of code.
+;; • Thing 'url and 'filepath, are rather different from how thingatpt.el determines them, and, again, is not based on syntax table, but based on regex of likely characters. Also, result is never modified version of what's in the buffer. For example, if 'url, the http prefix is not automatically added if it doesn't exist in buffer.
+;; • Thing 'line never includes newline character. This avoid inconsistency when line is last line.
+
+;; The return values of these functions is the same format as emacs's thingatpt.el, so you can just drop-in replace by changing the function names in your code.
+
 ;; Home page: http://ergoemacs.org/emacs/elisp_get-selection-or-unit.html
 
 ;;; Install:
@@ -40,6 +49,7 @@
 
 ;;; HISTORY
 
+;; xah-get-thing-at-cursor (deprecated), xah-get-thing-or-selection (deprecated)
 ;; 2015-05-22 changes won't be logged here anymore, unless incompatible ones.
 ;; version 1.0, 2015-05-22 was {unit-at-cursor, get-selection-or-unit} from xeu_elisp_util.el
 
