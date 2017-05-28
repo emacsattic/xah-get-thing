@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2016 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.0.3
+;; Version: 2.0.4
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
@@ -90,7 +90,7 @@ The main difference are:
 
 • Some “thing” such 'url and 'filepath considers strings that at USUALLY used for such. The algorithm that determines this is different from thing-at-point.
 
-Version 2016-12-22"
+Version 2017-05-27"
   (let (p1 p2)
     (save-excursion
       (cond
@@ -119,6 +119,7 @@ Version 2016-12-22"
           (setq p2 (line-end-position))))
        ((eq *unit 'block)
         (progn
+          (skip-chars-forward " \n\t")
           (if (re-search-backward "\n[ \t]*\n" nil "move")
               (progn (re-search-forward "\n[ \t]*\n")
                      (setq p1 (point)))
@@ -149,7 +150,7 @@ Version 2016-12-22"
           (skip-chars-forward -delimitors) ;"^ \t\n,)]}<>〕\"”"
           (setq p2 (point))))
 
-;; • 'filepath-or-url — either file path or URL, with heuristics to detect which sequences of chars to grab. They cannot be distinguished correctly by just lexical form. For example, URL usually contains the colon, but file path not. Sometimes you need this, for example, the value of “href” attribute, which can be just a file path (e.g. relative path) or URL (e.g. http://example.com/)
+       ;; • 'filepath-or-url — either file path or URL, with heuristics to detect which sequences of chars to grab. They cannot be distinguished correctly by just lexical form. For example, URL usually contains the colon, but file path not. Sometimes you need this, for example, the value of “href” attribute, which can be just a file path (e.g. relative path) or URL (e.g. http://example.com/)
 
        ;; ((eq *unit 'filepath-or-url)
        ;;  (let (p0
