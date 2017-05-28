@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2016 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.0.4
+;; Version: 2.0.5
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
@@ -119,7 +119,6 @@ Version 2017-05-27"
           (setq p2 (line-end-position))))
        ((eq *unit 'block)
         (progn
-          (skip-chars-forward " \n\t")
           (if (re-search-backward "\n[ \t]*\n" nil "move")
               (progn (re-search-forward "\n[ \t]*\n")
                      (setq p1 (point)))
