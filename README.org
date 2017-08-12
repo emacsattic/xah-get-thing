@@ -7,3 +7,11 @@ They get “things” independent of syntax table, so you always get same thing 
 And they allow you to get text selection when there's active region.
 
 See home page at http://ergoemacs.org/emacs/elisp_get-selection-or-unit.html
+
+Put in 5 bucks in my patreon.
+https://www.patreon.com/xahlee
+
+or https://paypal.com
+pay to xah@xahlee.org
+
+Thanks.

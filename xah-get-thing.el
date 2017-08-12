@@ -1,9 +1,9 @@
 ;;; xah-get-thing.el --- get thing or selection at point. -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2011-2016 by Xah Lee
+;; Copyright © 2011-2017 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.0.7
+;; Version: 2.1.20170811
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
