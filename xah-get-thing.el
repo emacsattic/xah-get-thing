@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2017 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.1.20170811
+;; Version: 2.1.20170820
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
@@ -11,7 +11,7 @@
 
 ;; This file is not part of GNU Emacs.
 
-;; You can redistribute this program and/or modify it under the terms of the GNU General Public License version 2.
+;; You can redistribute this program and/or modify it under the terms of the GNU General Public License version 3.
 
 ;;; Commentary:
 
