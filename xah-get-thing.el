@@ -7,11 +7,10 @@
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
+;; License: GPL v3
 ;; URL: http://ergoemacs.org/emacs/elisp_get-selection-or-unit.html
 
 ;; This file is not part of GNU Emacs.
-
-;; You can redistribute this program and/or modify it under the terms of the GNU General Public License version 3.
 
 ;;; Commentary:
 
