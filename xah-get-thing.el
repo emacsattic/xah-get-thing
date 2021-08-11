@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2021 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.3.20210811103901
+;; Version: 2.3.20210811104952
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
@@ -21,6 +21,7 @@
 ;; xah-get-bounds-of-thing
 ;; xah-get-bounds-of-thing-or-region
 ;; xah-get-thing-at-point
+;; xah-get-thing-or-region
 
 ;; They are useful for writing commands that act on text selection if there's one, or current {symbol, block, …} under cursor.
 
@@ -40,7 +41,7 @@
 
 ;;; Install:
 
-;; To install manually, place this file in the directory 〔~/.emacs.d/lisp/〕.
+;; To install manually, place this file in the directory ~/.emacs.d/lisp/
 ;; Then, add the following in your emacs lisp init:
 ;; (add-to-list 'load-path "~/.emacs.d/lisp/")
 ;; Then, in elisp code where you want to use it, add
@@ -121,12 +122,12 @@ Version 2017-05-27 2021-07-23"
           (skip-chars-forward $delimitors)
           (setq p2 (point))))
        ((eq @unit 'url)
-        (let ( ($delimitors "!\"#$%&'*+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~"))
+        (let ( ($delimitors "^  \t\n\"`'‘’“”|[]{}<>。\\"))
           (setq p0 (point))
-          (skip-chars-backward $delimitors) ;"^ \t\n,([{<>〔“\""
+          (skip-chars-backward $delimitors)
           (setq p1 (point))
           (goto-char p0)
-          (skip-chars-forward $delimitors) ;"^ \t\n,)]}<>〕\"”"
+          (skip-chars-forward $delimitors)
           (setq p2 (point))))
        ;; • 'filepath-or-url — either file path or URL, with heuristics to detect which sequences of chars to grab. They cannot be distinguished correctly by just lexical form. For example, URL usually contains the colon, but file path not. Sometimes you need this, for example, the value of “href” attribute, which can be just a file path (e.g. relative path) or URL (e.g. http://example.com/)
        ;; ((eq @unit 'filepath-or-url)
