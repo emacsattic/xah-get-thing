@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2021 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.2.20210723185706
+;; Version: 2.3.20210811103901
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
@@ -55,7 +55,7 @@
 
 ;;; Code:
 
-(defun xah-get-bounds-of-thing (@unit )
+(defun xah-get-bounds-of-thing (@unit)
   "Return the boundary of @UNIT under cursor.
 Return a cons cell (START . END).
 @UNIT can be:
@@ -167,38 +167,27 @@ Version 2017-05-27 2021-07-23"
     (cons p1 p2 )))
 
 (defun xah-get-bounds-of-thing-or-region (@unit)
-  "Same as `xah-get-bounds-of-thing', except when (use-region-p) is t, return the region boundary instead.
-Version 2016-10-18"
-  (if (use-region-p)
+  "If region is active, return its boundary, else same as `xah-get-bounds-of-thing'.
+Version 2016-10-18 2021-08-11"
+  (if (region-active-p)
       (cons (region-beginning) (region-end))
     (xah-get-bounds-of-thing @unit)))
 
+(defun xah-get-thing-or-region (@unit)
+  "If region is active, return its boundary, else return the thing at point.
+See `xah-get-bounds-of-thing' for @unit.
+Version 2021-08-11"
+  (if (region-active-p)
+      (buffer-substring-no-properties (region-beginning) (region-end))
+    (let (($bds (xah-get-bounds-of-thing @unit)))
+      (buffer-substring-no-properties (car $bds) (cdr $bds)))))
+
 (defun xah-get-thing-at-point (@unit)
-  "Same as `xah-get-bounds-of-thing', but return the string.
-Version 2016-10-18T02:31:36-07:00"
+  "Return the thing at point.
+See `xah-get-bounds-of-thing' for @unit.
+Version 2016-10-18 2021-08-11"
   (let ( ($bds (xah-get-bounds-of-thing @unit)) )
     (buffer-substring-no-properties (car $bds) (cdr $bds))))
-
-(defun xah-get-thing-at-cursor (@unit)
-  "Same as `xah-get-bounds-of-thing', except this returns a vector [text a b], where text is the string and a b are its boundary.
-
-Version 2016-10-18T00:23:52-07:00"
-  (let* (
-         ($bds (xah-get-bounds-of-thing @unit))
-         ($p1 (car $bds)) ($p2 (cdr $bds)))
-    (vector (buffer-substring-no-properties $p1 $p2) $p1 $p2 )))
-
-(make-obsolete 'xah-get-thing-at-cursor 'xah-get-thing-at-point "2016-10-18")
-
-(defun xah-get-thing-or-selection (@unit)
-  "Same as `xah-get-bounds-of-thing-or-region', except returns a vector [text a b], where text is the string and a b are its boundary."
-  (interactive)
-  (let* (
-         ($bds (xah-get-bounds-of-thing-or-region @unit))
-         ($p1 (car $bds)) ($p2 (cdr $bds)))
-    (vector (buffer-substring-no-properties $p1 $p2) $p1 $p2 )))
-
-(make-obsolete 'xah-get-thing-or-selection 'xah-get-bounds-of-thing-or-region "2016-10-18")
 
 (provide 'xah-get-thing)
 
