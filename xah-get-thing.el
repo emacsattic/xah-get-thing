@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2021 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.3.20210811104952
+;; Version: 2.3.20210811223853
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
@@ -79,7 +79,7 @@ The main difference are:
 • Support certain “thing” such as 'glyphs that's a sequence of chars. Useful as file path or url in html links, but do not know which before hand.
 • Some “thing” such 'url and 'filepath considers strings that at USUALLY used for such. The algorithm that determines this is different from thing-at-point.
 
-Version 2017-05-27 2021-07-23"
+Version 2017-05-27 2021-07-23 2021-08-11"
   (let ((p0 (point)) p1 p2)
     (save-excursion
       (cond
@@ -105,14 +105,12 @@ Version 2017-05-27 2021-07-23"
           (setq p2 (line-end-position))))
        ((eq @unit 'block)
         (progn
-          (if (re-search-backward "\n[ \t]*\n" nil "move")
-              (progn (re-search-forward "\n[ \t]*\n")
-                     (setq p1 (point)))
-            (setq p1 (point)))
-          (if (re-search-forward "\n[ \t]*\n" nil "move")
-              (progn (re-search-backward "\n[ \t]*\n")
-                     (setq p2 (point)))
-            (setq p2 (point)))))
+          (setq p1 (if (re-search-backward "\n[ \t]*\n" nil "move")
+                       (goto-char (match-end 0))
+                     (point)))
+          (setq p2 (if (re-search-forward "\n[ \t]*\n" nil "move")
+                       (match-beginning 0)
+                     (point)))))
        ((eq @unit 'filepath)
         (let (($delimitors "^  \"\t\n'|()[]{}<>〔〕“”〈〉《》【】〖〗«»‹›·。\\`"))
           ;; chars that are likely to be delimiters of full path, e.g. space, tabs, brakets.
