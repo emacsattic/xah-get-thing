@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2021 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.4.20210813013351
+;; Version: 2.4.20210828120308
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
@@ -56,10 +56,10 @@
 
 ;;; Code:
 
-(defun xah-get-bounds-of-thing (@unit)
-  "Return the boundary of @UNIT under cursor.
+(defun xah-get-bounds-of-thing (Unit)
+  "Return the boundary of Unit under cursor.
 Return a cons cell (START . END).
-@UNIT can be:
+Unit can be:
 • 'word → sequence of 0 to 9, A to Z, a to z, and hyphen.
 • 'glyphs → sequence of visible glyphs. Useful for file name, URL, …, anything doesn't have white spaces in it.
 • 'line → delimited by “\\n”. (captured text does not include “\\n”.)
@@ -74,7 +74,7 @@ Return a cons cell (START . END).
 This function is similar to `bounds-of-thing-at-point'.
 The main difference are:
 
-• This function's behavior does not depend on syntax table. e.g. for @units 「'word」, 「'block」, etc.
+• This function's behavior does not depend on syntax table. e.g. for Units 「'word」, 「'block」, etc.
 • 'line always returns the line without end of line character, avoiding inconsistency when the line is at end of buffer.
 • Support certain “thing” such as 'glyphs that's a sequence of chars. Useful as file path or url in html links, but do not know which before hand.
 • Some “thing” such 'url and 'filepath considers strings that at usually used for such. The algorithm that determines this is different from thing-at-point.
@@ -83,7 +83,7 @@ Version 2017-05-27 2021-07-23 2021-08-11"
   (let (($p0 (point)) $p1 $p2)
     (save-excursion
       (cond
-       ((eq @unit 'block)
+       ((eq Unit 'block)
         (progn
           (setq $p1 (if (re-search-backward "\n[ \t]*\n" nil "move")
                         (goto-char (match-end 0))
@@ -91,16 +91,16 @@ Version 2017-05-27 2021-07-23 2021-08-11"
           (setq $p2 (if (re-search-forward "\n[ \t]*\n" nil "move")
                         (match-beginning 0)
                       (point)))))
-       ((eq @unit 'filepath)
+
+       ((eq Unit 'filepath)
         (let (($delimitors "^  \"\t\n'|()[]{}<>〔〕“”〈〉《》【】〖〗«»‹›·。\\`"))
-          ;; chars that are likely to be delimiters of full path, e.g. space, tabs, brakets.
           (skip-chars-backward $delimitors)
           (setq $p1 (point))
           (goto-char $p0)
           (skip-chars-forward $delimitors)
           (setq $p2 (point))))
 
-       ((eq @unit 'url)
+       ((eq Unit 'url)
         (let ( ($delimitors "^  \t\n\"`'‘’“”|[]{}<>。\\"))
           (skip-chars-backward $delimitors)
           (setq $p1 (point))
@@ -108,7 +108,7 @@ Version 2017-05-27 2021-07-23 2021-08-11"
           (skip-chars-forward $delimitors)
           (setq $p2 (point))))
 
-       ((eq @unit 'inDoubleQuote)
+       ((eq Unit 'inDoubleQuote)
         (progn
           (skip-chars-backward "^\"")
           (setq $p1 (point))
@@ -116,7 +116,7 @@ Version 2017-05-27 2021-07-23 2021-08-11"
           (skip-chars-forward "^\"")
           (setq $p2 (point))))
 
-       ((eq @unit 'inSingleQuote)
+       ((eq Unit 'inSingleQuote)
         (progn
           (skip-chars-backward "^\"")
           (setq $p1 (point))
@@ -124,57 +124,57 @@ Version 2017-05-27 2021-07-23 2021-08-11"
           (skip-chars-forward "^\"")
           (setq $p2 (point))))
 
-       ((vectorp @unit)
+       ((vectorp Unit)
         (progn
-          (skip-chars-backward (elt @unit 0))
+          (skip-chars-backward (elt Unit 0))
           (setq $p1 (point))
           (goto-char $p0)
-          (skip-chars-forward (elt @unit 1))
+          (skip-chars-forward (elt Unit 1))
           (setq $p2 (point))))
 
-       ( (eq @unit 'word)
+       ( (eq Unit 'word)
          (let ((wordcharset "-A-Za-z0-9ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ"))
            (skip-chars-backward wordcharset)
            (setq $p1 (point))
            (skip-chars-forward wordcharset)
            (setq $p2 (point))))
-       ( (eq @unit 'glyphs)
+       ( (eq Unit 'glyphs)
          (progn
            (skip-chars-backward "[:graph:]")
            (setq $p1 (point))
            (skip-chars-forward "[:graph:]")
            (setq $p2 (point))))
-       ((eq @unit 'buffer)
+       ((eq Unit 'buffer)
         (progn
           (setq $p1 (point-min))
           (setq $p2 (point-max))))
-       ((eq @unit 'line)
+       ((eq Unit 'line)
         (progn
           (setq $p1 (line-beginning-position))
           (setq $p2 (line-end-position))))))
     (cons $p1 $p2 )))
 
-(defun xah-get-bounds-of-thing-or-region (@unit)
+(defun xah-get-bounds-of-thing-or-region (Unit)
   "If region is active, return its boundary, else same as `xah-get-bounds-of-thing'.
 Version 2016-10-18 2021-08-11"
   (if (region-active-p)
       (cons (region-beginning) (region-end))
-    (xah-get-bounds-of-thing @unit)))
+    (xah-get-bounds-of-thing Unit)))
 
-(defun xah-get-thing-or-region (@unit)
+(defun xah-get-thing-or-region (Unit)
   "If region is active, return its boundary, else return the thing at point.
-See `xah-get-bounds-of-thing' for @unit.
+See `xah-get-bounds-of-thing' for Unit.
 Version 2021-08-11"
   (if (region-active-p)
       (buffer-substring-no-properties (region-beginning) (region-end))
-    (let (($bds (xah-get-bounds-of-thing @unit)))
+    (let (($bds (xah-get-bounds-of-thing Unit)))
       (buffer-substring-no-properties (car $bds) (cdr $bds)))))
 
-(defun xah-get-thing-at-point (@unit)
+(defun xah-get-thing-at-point (Unit)
   "Return the thing at point.
-See `xah-get-bounds-of-thing' for @unit.
+See `xah-get-bounds-of-thing' for Unit.
 Version 2016-10-18 2021-08-11"
-  (let ( ($bds (xah-get-bounds-of-thing @unit)) )
+  (let ( ($bds (xah-get-bounds-of-thing Unit)) )
     (buffer-substring-no-properties (car $bds) (cdr $bds))))
 
 (provide 'xah-get-thing)
