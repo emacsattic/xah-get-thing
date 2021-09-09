@@ -3,7 +3,7 @@
 ;; Copyright © 2011-2021 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 2.4.20210828120308
+;; Version: 2.4.20210909082829
 ;; Created: 22 May 2015
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: extensions, lisp, tools
@@ -53,7 +53,7 @@
 ;; 2015-05-22 changes won't be logged here anymore, unless incompatible ones.
 ;; version 1.0, 2015-05-22 was {unit-at-cursor, get-selection-or-unit} from xeu_elisp_util.el
 
-
+;; HHH___________________________________________________________________
 ;;; Code:
 
 (defun xah-get-bounds-of-thing (Unit)
@@ -79,7 +79,7 @@ The main difference are:
 • Support certain “thing” such as 'glyphs that's a sequence of chars. Useful as file path or url in html links, but do not know which before hand.
 • Some “thing” such 'url and 'filepath considers strings that at usually used for such. The algorithm that determines this is different from thing-at-point.
 
-Version 2017-05-27 2021-07-23 2021-08-11"
+Version 2017-05-27 2021-09-09"
   (let (($p0 (point)) $p1 $p2)
     (save-excursion
       (cond
@@ -93,7 +93,7 @@ Version 2017-05-27 2021-07-23 2021-08-11"
                       (point)))))
 
        ((eq Unit 'filepath)
-        (let (($delimitors "^  \"\t\n'|()[]{}<>〔〕“”〈〉《》【】〖〗«»‹›·。\\`"))
+        (let (($delimitors "^  \t\n\"`'|[]{}<>‘’“”「」〔〕〈〉《》【】〖〗«»‹›·。\\`"))
           (skip-chars-backward $delimitors)
           (setq $p1 (point))
           (goto-char $p0)
@@ -101,7 +101,7 @@ Version 2017-05-27 2021-07-23 2021-08-11"
           (setq $p2 (point))))
 
        ((eq Unit 'url)
-        (let ( ($delimitors "^  \t\n\"`'‘’“”|[]{}<>。\\"))
+        (let ( ($delimitors "^  \t\n\"`'|[]{}<>‘’“”。\\"))
           (skip-chars-backward $delimitors)
           (setq $p1 (point))
           (goto-char $p0)
